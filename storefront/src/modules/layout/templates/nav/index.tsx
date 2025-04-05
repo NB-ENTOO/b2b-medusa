@@ -9,11 +9,11 @@ import SkeletonAccountButton from "@modules/skeletons/components/skeleton-accoun
 import SkeletonCartButton from "@modules/skeletons/components/skeleton-cart-button"
 import SkeletonMegaMenu from "@modules/skeletons/components/skeleton-mega-menu"
 import { Suspense } from "react"
-import { listCategories } from "@lib/data"
+import { listCategories } from "@lib/data/categories"
 import { HttpTypes } from "@medusajs/types"
 
 export async function NavigationHeader() {
-  const { product_categories } = await listCategories()
+  const product_categories = await listCategories()
 
   return (
     <div className="sticky top-0 inset-x-0 group bg-white text-zinc-900 small:p-4 p-2 text-sm border-b duration-200 border-ui-border-base z-50">
