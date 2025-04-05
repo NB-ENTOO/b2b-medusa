@@ -3,14 +3,18 @@ import CartButton from "@modules/cart/components/cart-button"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import FilePlus from "@modules/common/icons/file-plus"
 import LogoIcon from "@modules/common/icons/logo"
-import { MegaMenuWrapper } from "@modules/layout/components/mega-menu"
+import MegaMenu from "@modules/layout/components/mega-menu/mega-menu"
 import { RequestQuotePrompt } from "@modules/quotes/components/request-quote-prompt"
 import SkeletonAccountButton from "@modules/skeletons/components/skeleton-account-button"
 import SkeletonCartButton from "@modules/skeletons/components/skeleton-cart-button"
 import SkeletonMegaMenu from "@modules/skeletons/components/skeleton-mega-menu"
 import { Suspense } from "react"
+import { listCategories } from "@lib/data"
+import { HttpTypes } from "@medusajs/types"
 
-export function NavigationHeader() {
+export async function NavigationHeader() {
+  const { product_categories } = await listCategories()
+
   return (
     <div className="sticky top-0 inset-x-0 group bg-white text-zinc-900 small:p-4 p-2 text-sm border-b duration-200 border-ui-border-base z-50">
       <header className="flex w-full content-container relative small:mx-auto justify-between">
@@ -22,7 +26,7 @@ export function NavigationHeader() {
             >
               <h1 className="small:text-base text-sm font-medium flex items-center">
                 <LogoIcon className="inline mr-2" />
-                Medusa B2B Starter
+                NET-BRIDGE // Updated Name
               </h1>
             </LocalizedClientLink>
 
@@ -30,7 +34,7 @@ export function NavigationHeader() {
               <ul className="space-x-4 hidden small:flex">
                 <li>
                   <Suspense fallback={<SkeletonMegaMenu />}>
-                    <MegaMenuWrapper />
+                    <MegaMenu categories={product_categories as HttpTypes.StoreProductCategory[]} />
                   </Suspense>
                 </li>
               </ul>

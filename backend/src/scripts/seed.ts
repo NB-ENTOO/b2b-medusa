@@ -329,643 +329,203 @@ export default async function seedDemoData({ container }: ExecArgs) {
     input: {
       product_categories: [
         {
-          name: "Laptops",
+          name: "Servers",
           is_active: true,
         },
         {
-          name: "Accessories",
+          name: "Storage",
           is_active: true,
         },
         {
-          name: "Phones",
+          name: "Networking",
           is_active: true,
         },
         {
-          name: "Monitors",
+          name: "Components",
           is_active: true,
         },
       ],
     },
   });
 
+  // Get category IDs
+  const serversCategoryId = categoryResult.find((cat) => cat.name === "Servers")?.id!;
+  const storageCategoryId = categoryResult.find((cat) => cat.name === "Storage")?.id!;
+  const networkingCategoryId = categoryResult.find((cat) => cat.name === "Networking")?.id!;
+  const componentsCategoryId = categoryResult.find((cat) => cat.name === "Components")?.id!;
+
+  logger.info("Seeding placeholder product data...");
+
+  // --- Seed Servers ---
   await createProductsWorkflow(container).run({
     input: {
       products: [
         {
-          title:
-            '16" Ultra-Slim AI Laptop | 3K OLED | 1.1cm Thin | 6-Speaker Audio',
-          collection_id: collection.id,
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Laptops")?.id!,
-          ],
-          description:
-            "This ultra-thin 16-inch laptop is a sophisticated, high-performance machine for the new era of artificial intelligence. It has been completely redesigned from the inside out. The cabinet features an exquisite new ceramic-aluminum composite material in a range of nature-inspired colors. This material provides durability while completing the ultra-slim design and resisting the test of time. This innovative computer utilizes the latest AI-enhanced processor with quiet ambient cooling. It's designed to enrich your lifestyle on the go with an astonishingly thin 1.1cm chassis that houses an advanced 16-inch 3K OLED display and immersive six-speaker audio.",
-          weight: 400,
+          title: "Rack Server Model R740",
+          subtitle: "High-performance 2U rack server",
+          description: "Versatile server suitable for demanding enterprise workloads, virtualization, and cloud computing. Highly configurable.",
+          collection_id: collection.id, // Assuming 'collection' is defined earlier for featured items
+          category_ids: [serversCategoryId],
           status: ProductStatus.PUBLISHED,
           images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/laptop-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/laptop-side.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/laptop-top.png",
-            },
+            // Placeholder image - replace with actual later
+            { url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/server-generic.png" }
           ],
-          options: [
-            {
-              title: "Storage",
-              values: ["256 GB", "512 GB"],
-            },
-            {
-              title: "Color",
-              values: ["Blue", "Red"],
-            },
-          ],
+          metadata: {
+            processor_type: "Intel Xeon Scalable",
+            memory_gb: "64",
+            storage_capacity_tb: "4",
+            form_factor: "2U Rack"
+          },
+          // Define basic options for demonstration - real config handled separately
+          options: [{ title: "Base RAM", values: [] }, { title: "Base Storage", values: [] }],
           variants: [
             {
-              title: "256 GB / Blue",
-              sku: "256-BLUE",
-              options: {
-                Storage: "256 GB",
-                Color: "Blue",
-              },
+              title: "Base Configuration",
+              sku: "R740-BASE",
+              options: { "Base RAM": "64GB", "Base Storage": "4TB SSD" },
               manage_inventory: false,
-              prices: [
-                {
-                  amount: 1299,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 1299,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "512 GB / Red",
-              sku: "512-RED",
-              options: {
-                Storage: "512 GB",
-                Color: "Red",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 1259,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 1259,
-                  currency_code: "usd",
-                },
-              ],
-            },
+              prices: [{ amount: 450000, currency_code: "usd" }, { amount: 420000, currency_code: "eur" }]
+            }
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
+          sales_channels: [{ id: defaultSalesChannel[0].id }]
+        }
+      ]
+    }
   });
 
+  // --- Seed Storage ---
   await createProductsWorkflow(container).run({
     input: {
       products: [
         {
-          title: "1080p HD Pro Webcam | Superior Video | Privacy enabled",
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Accessories")?.id!,
-          ],
-          description:
-            "High-quality 1080p HD webcam that elevates your work environment with superior video and audio that outperforms standard laptop cameras. Achieve top-tier video collaboration at a cost-effective price point, ideal for widespread deployment across your organization.",
-          weight: 400,
+          title: "Enterprise NAS Array X4",
+          subtitle: "Scalable Network Attached Storage",
+          description: "Reliable and scalable NAS solution for file sharing, backup, and data archiving. Supports multiple RAID configurations.",
+          category_ids: [storageCategoryId],
           status: ProductStatus.PUBLISHED,
           images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/camera-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/camera-side.png",
-            },
+             { url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/nas-generic.png" }
           ],
-          options: [
-            {
-              title: "Color",
-              values: ["Black", "White"],
-            },
-          ],
+          metadata: {
+            storage_type: "NAS",
+            capacity_tb: "24",
+            interface: "Ethernet",
+            form_factor: "Tower"
+          },
+          options: [{ title: "Drive Configuration", values: [] }],
           variants: [
             {
-              title: "Webcam Black",
-              sku: "WEBCAM-BLACK",
-              options: {
-                Color: "Black",
-              },
+              title: "Diskless",
+              sku: "NAS-X4-DISKLESS",
+              options: { "Drive Configuration": "Diskless" },
               manage_inventory: false,
-              prices: [
-                {
-                  amount: 59,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 59,
-                  currency_code: "usd",
-                },
-              ],
+              prices: [{ amount: 120000, currency_code: "usd" }, { amount: 110000, currency_code: "eur" }]
             },
-            {
-              title: "Webcam White",
-              sku: "WEBCAM-WHITE",
-              options: {
-                Color: "White",
-              },
+             {
+              title: "24TB (4x6TB)",
+              sku: "NAS-X4-24TB",
+              options: { "Drive Configuration": "4x6TB HDD" },
               manage_inventory: false,
-              prices: [
-                {
-                  amount: 65,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 65,
-                  currency_code: "usd",
-                },
-              ],
-            },
+              prices: [{ amount: 250000, currency_code: "usd" }, { amount: 230000, currency_code: "eur" }]
+            }
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
+          sales_channels: [{ id: defaultSalesChannel[0].id }]
+        }
+      ]
+    }
   });
 
+  // --- Seed Networking ---
   await createProductsWorkflow(container).run({
     input: {
       products: [
         {
-          title: `6.5" Ultra HD Smartphone | 3x Impact-Resistant Screen`,
-          collection_id: collection.id,
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Phones")?.id!,
-          ],
-          description:
-            'This premium smartphone is crafted from durable and lightweight aerospace-grade aluminum, featuring an expansive 6.5" Ultra-High Definition AMOLED display. It boasts exceptional durability with a cutting-edge nanocrystal glass front, offering three times the impact resistance of standard smartphone screens. The device combines sleek design with robust protection, setting a new standard for smartphone resilience and visual excellence. Copy',
-          weight: 400,
+          title: "Managed Network Switch S3900",
+          subtitle: "48-Port Gigabit Managed Switch",
+          description: "Layer 2+ managed switch with 48 Gigabit Ethernet ports and 4 SFP+ uplinks. Ideal for enterprise networks.",
+          category_ids: [networkingCategoryId],
           status: ProductStatus.PUBLISHED,
           images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/phone-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/phone-side.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/phone-bottom.png",
-            },
+             { url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/switch-generic.png" }
           ],
-          options: [
-            {
-              title: "Memory",
-              values: ["256 GB", "512 GB"],
-            },
-            {
-              title: "Color",
-              values: ["Purple", "Red"],
-            },
-          ],
+          metadata: {
+            device_type: "Switch",
+            port_count: "48",
+            port_speed_gbps: "1"
+          },
+          options: [{ title: "Power Supply", values: [] }],
           variants: [
             {
-              title: "256 GB Purple",
-              sku: "PHONE-256-PURPLE",
-              options: {
-                Memory: "256 GB",
-                Color: "Purple",
-              },
+              title: "Standard PSU",
+              sku: "SW-S3900-STD",
+              options: { "Power Supply": "Standard" },
               manage_inventory: false,
-              prices: [
-                {
-                  amount: 999,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 999,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "256 GB Red",
-              sku: "PHONE-256-RED",
-              options: {
-                Memory: "256 GB",
-                Color: "Red",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 959,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 959,
-                  currency_code: "usd",
-                },
-              ],
-            },
+              prices: [{ amount: 80000, currency_code: "usd" }, { amount: 75000, currency_code: "eur" }]
+            }
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
+          sales_channels: [{ id: defaultSalesChannel[0].id }]
+        }
+      ]
+    }
   });
 
+  // --- Seed Components ---
   await createProductsWorkflow(container).run({
     input: {
       products: [
         {
-          title: `34" QD-OLED Curved Gaming Monitor | Ultra-Wide | Infinite Contrast | 175Hz`,
-          collection_id: collection.id,
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Monitors")?.id!,
-          ],
-          description:
-            "Experience the pinnacle of display technology with this 34-inch curved monitor. By merging OLED panels and Quantum Dot technology, this QD-OLED screen delivers exceptional contrast, deep blacks, unlimited viewing angles, and vivid colors. The curved design provides an immersive experience, allowing you to enjoy the best of both worlds in one cutting-edge display. This innovative monitor represents the ultimate fusion of visual performance and immersive design.",
-          weight: 400,
+          title: "Intel Xeon Gold 6248R Processor",
+          subtitle: "24-Core Scalable Processor",
+          description: "High-performance CPU for demanding server workloads. LGA3647 Socket.",
+          category_ids: [componentsCategoryId],
           status: ProductStatus.PUBLISHED,
           images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/screen-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/screen-side.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/screen-top.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/screen-back.png",
-            },
+             { url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/cpu-generic.png" }
           ],
-          options: [
-            {
-              title: "Color",
-              values: ["White", "Black"],
-            },
-          ],
+          metadata: {
+            component_type: "CPU",
+            compatibility_key: "LGA3647"
+          },
+          options: [{ title: "Packaging", values: [] }],
           variants: [
             {
-              title: "ACME Monitor 4k White",
-              sku: "ACME-MONITOR-WHITE",
-              options: {
-                Color: "White",
-              },
+              title: "Retail Box",
+              sku: "CPU-XG-6248R",
+              options: { "Packaging": "Retail" },
               manage_inventory: false,
-              prices: [
-                {
-                  amount: 599,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 599,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "ACME Monitor 4k White",
-              sku: "ACME-MONITOR-BLACK",
-              options: {
-                Color: "Black",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 599,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 599,
-                  currency_code: "usd",
-                },
-              ],
-            },
+              prices: [{ amount: 270000, currency_code: "usd" }, { amount: 250000, currency_code: "eur" }]
+            }
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
+          sales_channels: [{ id: defaultSalesChannel[0].id }]
         },
-      ],
-    },
-  });
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
         {
-          title: "Hi-Fi Gaming Headset | Pro-Grade DAC | Hi-Res Certified",
-          collection_id: collection.id,
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Accessories")?.id!,
-          ],
-          description: `Experience studio-quality audio with this advanced acoustic system, which pairs premium hardware with high-fidelity sound and innovative audio software for an immersive listening experience. The integrated digital-to-analog converter (DAC) enhances the audio setup with high-resolution certification and a built-in amplifier, delivering exceptional sound clarity and depth. This comprehensive audio solution brings professional-grade sound to your personal environment, whether for gaming, music production, or general entertainment.`,
-          weight: 400,
+          title: "Samsung 32GB DDR4 ECC RAM Module",
+          subtitle: "Server Memory Module 2666MHz",
+          description: "Reliable ECC registered memory for server applications.",
+          category_ids: [componentsCategoryId],
           status: ProductStatus.PUBLISHED,
           images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/headphone-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/headphone-side.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/headphone-top.png",
-            },
+             { url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/ram-generic.png" }
           ],
-          options: [
-            {
-              title: "Color",
-              values: ["Black", "White"],
-            },
-          ],
+          metadata: {
+            component_type: "RAM",
+            compatibility_key: "DDR4-ECC-RDIMM"
+          },
+          options: [{ title: "Speed", values: [] }], // Example option
           variants: [
             {
-              title: "Headphone Black",
-              sku: "HEADPHONE-BLACK",
-              options: {
-                Color: "Black",
-              },
+              title: "2666MHz",
+              sku: "RAM-SAM-32G-ECC",
+              options: { "Speed": "2666MHz" },
               manage_inventory: false,
-              prices: [
-                {
-                  amount: 149,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 149,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "Headphone White",
-              sku: "HEADPHONE-WHITE",
-              options: {
-                Color: "White",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 149,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 149,
-                  currency_code: "usd",
-                },
-              ],
-            },
+              prices: [{ amount: 15000, currency_code: "usd" }, { amount: 14000, currency_code: "eur" }]
+            }
           ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: "Wireless Keyboard | Touch ID | Numeric Keypad",
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Accessories")?.id!,
-          ],
-          description: `This wireless keyboard offers a comfortable typing experience with a numeric keypad and Touch ID. It features navigation buttons, full-sized arrow keys, and is ideal for spreadsheets and gaming. The rechargeable battery lasts about a month. It pairs automatically with compatible computers and includes a USB-C to Lightning cable for charging and pairing.`,
-          weight: 400,
-          status: ProductStatus.PUBLISHED,
-          images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/keyboard-front.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/keyboard-side.png",
-            },
-          ],
-          options: [
-            {
-              title: "Color",
-              values: ["Black", "White"],
-            },
-          ],
-          variants: [
-            {
-              title: "Keyboard Black",
-              sku: "KEYBOARD-BLACK",
-              options: {
-                Color: "Black",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 99,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 99,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "Keyboard White",
-              sku: "KEYBOARD-WHITE",
-              options: {
-                Color: "White",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 99,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 99,
-                  currency_code: "usd",
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: "Wireless Rechargeable Mouse | Multi-Touch Surface",
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Accessories")?.id!,
-          ],
-          description: `This wireless keyboard offers a comfortable typing experience with a numeric keypad and Touch ID. It features navigation buttons, full-sized arrow keys, and is ideal for spreadsheets and gaming. The rechargeable battery lasts about a month. It pairs automatically with compatible computers and includes a USB-C to Lightning cable for charging and pairing.`,
-          weight: 400,
-          status: ProductStatus.PUBLISHED,
-          images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/mouse-top.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/mouse-front.png",
-            },
-          ],
-          options: [
-            {
-              title: "Color",
-              values: ["Black", "White"],
-            },
-          ],
-          variants: [
-            {
-              title: "Mouse Black",
-              sku: "MOUSE-BLACK",
-              options: {
-                Color: "Black",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 79,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 79,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "Mouse White",
-              sku: "MOUSE-WHITE",
-              options: {
-                Color: "White",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 79,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 79,
-                  currency_code: "usd",
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
-  });
-
-  await createProductsWorkflow(container).run({
-    input: {
-      products: [
-        {
-          title: "Conference Speaker | High-Performance | Budget-Friendly",
-          category_ids: [
-            categoryResult.find((cat) => cat.name === "Accessories")?.id!,
-          ],
-          description: `This compact, powerful conference speaker offers exceptional, high-performance features at a surprisingly affordable price. Packed with advanced productivity-enhancing technology, it delivers premium functionality without the premium price tag. Experience better meetings and improved communication, regardless of where your team members are calling from.`,
-          weight: 400,
-          status: ProductStatus.PUBLISHED,
-          images: [
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/speaker-top.png",
-            },
-            {
-              url: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/speaker-front.png",
-            },
-          ],
-          options: [
-            {
-              title: "Color",
-              values: ["Black", "White"],
-            },
-          ],
-          variants: [
-            {
-              title: "Speaker Black",
-              sku: "SPEAKER-BLACK",
-              options: {
-                Color: "Black",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 79,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 79,
-                  currency_code: "usd",
-                },
-              ],
-            },
-            {
-              title: "Speaker White",
-              sku: "SPEAKER-WHITE",
-              options: {
-                Color: "White",
-              },
-              manage_inventory: false,
-              prices: [
-                {
-                  amount: 55,
-                  currency_code: "eur",
-                },
-                {
-                  amount: 55,
-                  currency_code: "usd",
-                },
-              ],
-            },
-          ],
-          sales_channels: [
-            {
-              id: defaultSalesChannel[0].id,
-            },
-          ],
-        },
-      ],
-    },
+          sales_channels: [{ id: defaultSalesChannel[0].id }]
+        }
+      ]
+    }
   });
 
   logger.info("Finished seeding product data.");
