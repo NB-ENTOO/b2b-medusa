@@ -1,6 +1,15 @@
-import { Module } from "@medusajs/framework/utils";
-import QuoteModuleService from "./service";
+// import { Module } from "@medusajs/framework"; // Incorrect import
+import { Quotation } from "./models/quotation.model";
+import { QuotationItem } from "./models/quotation-item.model";
 
-export const QUOTE_MODULE = "quote";
+// Define a unique key for the module
+export const QUOTE_MODULE = "quoteModule";
 
-export default Module(QUOTE_MODULE, { service: QuoteModuleService });
+// Export the configuration object directly
+export const moduleDefinition = {
+  models: [Quotation, QuotationItem],
+  // We will add services, loaders, etc., here later
+};
+
+// Default export for Medusa's module loader
+export default moduleDefinition; 
