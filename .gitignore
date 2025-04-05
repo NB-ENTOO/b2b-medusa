@@ -54,3 +54,12 @@ yarn-error.log*
 ehthumbs.db
 Thumbs.db
 **/.DS_Store
+
+# Cursor IDE files
+.cursor/
+**/.cursor/
+.cursor
+**/.cursor
+
+# Memory Bank (optional - remove if you want to track these)
+MemoryBank/
