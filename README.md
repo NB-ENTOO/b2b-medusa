@@ -2,11 +2,11 @@
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://github.com/user-attachments/assets/38ba3a7b-e07b-4117-8187-7b171eae3769" alt="B2B Commerce Starter" width="80" height="80"></a>
   <br>
   <br>
-  Medusa B2B Commerce Starter
+  NET-BRIDGE: Advanced B2B Configurator System
   <br>
 </h1>
 
-<p align="center">Customizable B2B ecommerce built with <a href="https://medusajs.com/" target="_blank">Medusa 2.0</a> & Next.js Storefront</p>
+<p align="center">Custom product configurator with compatibility rules, built on <a href="https://medusajs.com/" target="_blank">Medusa 2.0</a> & Next.js Storefront</p>
 
 <p align="center">
   <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
@@ -29,12 +29,32 @@
 
 <br>
 
-## Table
+## Project Overview
+
+NET-BRIDGE is an advanced B2B product configurator and commerce platform built on the Medusa B2B Starter. This system extends Medusa's capabilities with:
+
+- **Product Configuration System**: Custom interactive product builders with component selection
+- **Compatibility Rules Engine**: Real-time validation of product configurations
+- **Dynamic Pricing System**: Automatic price calculations based on selections
+- **Quote Management System**: Generation of quotes from configured products
+- **B2B Company Features**: All features from the Medusa B2B Starter
+
+This project is currently under active development.
+
+## Current Status
+
+- ✅ **Planning Phase**: Completed requirements analysis, architecture design
+- ✅ **Creative Phase**: Completed UI/UX design decisions, architecture approach, rule-based compatibility engine design
+- 🔄 **Implementation Phase**: In progress
+  - Currently implementing Quotation System backend models
+  - Next: Generate and run database migrations for the Quotation System
+  - Remaining: Compatibility engine, Configuration system, UI enhancements
+
+## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Overview](#overview)
-  - [Features](#features)
-  - [Demo](#demo)
+- [Features](#features)
+- [Demo](#demo)
 - [Quickstart](#quickstart)
 - [Update](#update)
 - [Resources](#resources)
@@ -48,13 +68,37 @@
 
 - ✅ Node 20
 - ✅ Postgres 15
-- ✅ Medusa 2.4
+- ✅ Medusa 2.6.1
 - ✅ Next.js 15
 
 &nbsp;
 
-## Overview
-For a full feature overview, please visit [the project wiki](https://github.com/medusajs/b2b-starter-medusa/wiki).
+## Features
+
+### NET-BRIDGE Configurator Features
+In addition to all features from the Medusa B2B Starter, NET-BRIDGE adds:
+
+#### Custom Product Configuration
+- Interactive product builders with component selection
+- Visual representation of configurations
+- Save/load configuration templates
+
+#### Compatibility Rules Engine
+- Real-time validation of product combinations
+- Rule-based compatibility checking
+- Admin interface for rule management
+
+#### Dynamic Pricing
+- Automatic price recalculation based on configuration
+- Support for complex pricing models
+- Discount application for compatible combinations
+
+#### Enhanced Quotation System
+- Generate quotes from configured products
+- PDF quote generation
+- Email delivery of quotes
+
+### Medusa B2B Starter Features
 
 #### Core features
 
@@ -82,7 +126,7 @@ For a full feature overview, please visit [the project wiki](https://github.com/
 
 &nbsp;
 
-#### Demo
+## Demo
 
 #### Quote Management
 
@@ -176,7 +220,7 @@ Some general guidelines for when you're updating this Starter to a newer version
 
 ## Update packages
 
-Run `yarn install` in both projects to update you're packages to the latest versions.
+Run `yarn install` in both projects to update your packages to the latest versions.
 
 ## Run migrations
 
